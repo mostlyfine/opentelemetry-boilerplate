@@ -1,0 +1,16 @@
+services:
+  pyroscope:
+    container_name: pyroscope
+    image: grafana/pyroscope:latest
+    command:
+      - "-config.file=/etc/pyroscope.yaml"
+    environment:
+      JAEGER_AGENT_HOST: tempo
+      JAEGER_SAMPLER_TYPE: const
+      JAEGER_SAMPLER_PARAM: 1
+    volumes:
+      - ./pyroscope.yaml:/etc/pyroscope.yaml
+    ports:
+      - "4040:4040"  # http
+      - "4041:4041"  # grpc
+

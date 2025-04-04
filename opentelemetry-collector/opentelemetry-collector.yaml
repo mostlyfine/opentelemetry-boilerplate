@@ -1,0 +1,141 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+  prometheus/collector:
+    config:
+      scrape_configs:
+        - job_name: 'opentelemetry-collector'
+          static_configs:
+            - targets:
+              - 'localhost:8888'
+        - job_name: 'grafana'
+          static_configs:
+            - targets:
+              - 'grafana:3000'
+        - job_name: 'loki'
+          static_configs:
+            - targets:
+              - 'loki:3100'
+        - job_name: 'tempo'
+          static_configs:
+            - targets:
+              - 'tempo:3200'
+        - job_name: 'pyroscope'
+          static_configs:
+            - targets:
+              - 'pyroscope:4040'
+        - job_name: 'mimir'
+          static_configs:
+            - targets:
+              - 'mimir:9009'
+  httpcheck:
+    targets:
+      - endpoint: "http://nginx:80"
+
+  nginx:
+    endpoint: "http://nginx:80/nginx_status"
+
+processors:
+  batch:
+    timeout: 1s
+
+  memory_limiter:
+    limit_percentage: 70
+    check_interval: 1s
+
+  resourcedetection:
+    detectors: [env, system]
+
+connectors:
+  spanmetrics:
+    histogram:
+      explicit:
+        buckets: [1ms, 10ms, 100ms, 200ms, 300ms, 400ms, 500ms, 600ms, 700ms, 800ms, 900ms, 1s]
+    dimensions:
+      - name: http.method
+      - name: http.status_code
+      - name: http.route
+    namespace: ""
+    metrics_flush_interval: 3s
+
+
+exporters:
+  otlphttp/mimir:
+    endpoint: http://mimir:9009/otlp
+    tls:
+      insecure: true
+
+  prometheusremotewrite:
+    endpoint: http://mimir:9009/api/v1/push
+    tls:
+      insecure: true
+    target_info:
+      enabled: true
+
+  otlphttp/traces:
+    endpoint: http://tempo:4418
+    tls:
+      insecure: true
+
+  otlphttp/logs:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+
+  debug:
+    verbosity: basic
+
+service:
+  telemetry:
+    metrics:
+      address: localhost:8888
+  pipelines:
+    traces:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - batch
+      exporters:
+        - spanmetrics
+        - otlphttp/traces
+        - debug
+
+    metrics:
+      receivers:
+        - otlp
+        - prometheus/collector
+        - httpcheck
+        - nginx
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - batch
+      exporters:
+        - otlphttp/mimir
+        - debug
+
+    metrics/spanmetrics:
+      receivers:
+        - spanmetrics
+      processors:
+        - memory_limiter
+        - batch
+      exporters:
+        - prometheusremotewrite
+
+    logs:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - batch
+      exporters:
+        - otlphttp/logs
+        - debug

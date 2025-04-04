@@ -1,0 +1,18 @@
+services:
+  app:
+    container_name: sample-app
+    image: sample-app
+    build:
+      context: ./
+    environment:
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://opentelemetry-collector:4318
+      OTEL_RESOURCE_ATTRIBUTES: "service.name=sample-app,service.namespace=sample"
+      OTEL_LOGS_EXPORTER: otlp
+      OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: true
+      OTEL_PYTHON_LOG_CORRELATION: true
+      OTEL_PYTHON_LOG_LEVEL: info
+      PYROSCOPE_SERVER_ADDRESS: http://pyroscope:4040
+    ports:
+      - "5002:5002"
+

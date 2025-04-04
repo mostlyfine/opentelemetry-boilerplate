@@ -1,0 +1,11 @@
+services:
+  loki:
+    container_name: loki
+    image: grafana/loki:latest
+    command:
+      - "-config.file=/etc/loki/loki.yaml"
+    volumes:
+      - ./loki.yaml:/etc/loki/loki.yaml
+    ports:
+      - 3100 # http
+      - 9095 # grpc

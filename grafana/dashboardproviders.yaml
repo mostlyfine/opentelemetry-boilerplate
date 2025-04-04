@@ -1,0 +1,10 @@
+apiVersion: 1
+
+providers:
+  - name: 'opentelemetry'
+    orgId: 1
+    folder: 'opentelemetry'
+    type: file
+    editable: false
+    options:
+      path: /var/lib/grafana/dashboards/opentelemetry

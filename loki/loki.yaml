@@ -1,0 +1,42 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  log_level: info
+
+common:
+  path_prefix: /etc/loki/data
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+  storage:
+    filesystem:
+      chunks_directory: /etc/loki/data/chunks
+      rules_directory: /etc/loki/data/rules
+
+ingester:
+  max_chunk_age: 1h
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+  wal:
+    enabled: true
+    dir: /etc/loki/data/wal
+    flush_on_shutdown: true
+
+schema_config:
+  configs:
+    - from: 2024-04-01
+      object_store: filesystem
+      store: tsdb
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+limits_config:
+  allow_structured_metadata: true

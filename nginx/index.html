@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+    <title>sample app</title>
+  </head>
+  <body>
+    <div id="weather-container"></div>
+    <button id="rollButton">Roll it!</button>
+    <div id="roll-container"></div>
+    <script>
+      async function roll() {
+        const container = document.getElementById('roll-container');
+        try {
+          const response = await fetch("/api/rolldice");
+          if(!response.ok) {
+            throw new Error(`HTTPError: ${response.status} ${response.statusText}`);
+          }
+          const jsonData = await response.json();
+          container.innerHTML = `
+            <h2>${jsonData.result}</h2>
+          `
+        } catch(err) {
+          container.innerHTML = err;
+          console.error(err);
+        }
+      }
+
+      async function weather() {
+        const container = document.getElementById('weather-container');
+        try {
+          const response = await fetch("/api/weather");
+          if(!response.ok) {
+            throw new Error(`HTTPError: ${response.status} ${response.statusText}`);
+          }
+          const jsonData = await response.json();
+          container.innerHTML = `
+            <h2>${jsonData[0].timeSeries[0].areas[0].area.name} : ${jsonData[0].timeSeries[0].areas[0].weathers[0]}</h2>
+          `
+        } catch(err) {
+          container.innerHTML = err;
+          console.error(err);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        weather();
+        const rollButton = document.getElementById('rollButton');
+        rollButton.addEventListener('click', roll);
+      });
+    </script>
+  </body>
+</html>
+

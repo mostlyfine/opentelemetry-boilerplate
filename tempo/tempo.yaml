@@ -1,0 +1,37 @@
+stream_over_http_enabled: true
+
+server:
+  http_listen_port: 3200
+  grpc_listen_port: 9096
+  log_level: info
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "0.0.0.0:4417"
+        http:
+          endpoint: "0.0.0.0:4418"
+
+storage:
+  trace:
+    backend: local
+    wal:
+      path: /var/tempo/data/wal
+    local:
+      path: /var/tempo/data/blocks
+
+metrics_generator:
+  processor:
+    local_blocks:
+      filter_server_spans: false
+  traces_storage:
+    path: /var/tempo/data/generator/traces
+  storage:
+    path: /var/tempo/data/generator/wal
+    remote_write:
+      - url: http://mimir:9009/api/v1/push
+
+overrides:
+  metrics_generator_processors: [service-graphs, local-blocks, span-metrics]

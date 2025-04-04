@@ -1,0 +1,14 @@
+services:
+  mimir:
+    container_name: mimir
+    image: grafana/mimir:latest
+    command:
+      - "-config.expand-env=true"
+      - "-config.file=/etc/mimir.yaml"
+      - "-query-frontend.query-result-response-format=protobuf"
+      - "-ingester.native-histograms-ingestion-enabled=true"
+    volumes:
+      - "./mimir.yaml:/etc/mimir.yaml"
+    ports:
+      - 9009  # http
+

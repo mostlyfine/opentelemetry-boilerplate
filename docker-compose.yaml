@@ -1,0 +1,9 @@
+include:
+  - ./grafana/docker-compose.yaml
+  - ./mimir/docker-compose.yaml
+  - ./loki/docker-compose.yaml
+  - ./tempo/docker-compose.yaml
+  - ./pyroscope/docker-compose.yaml
+  - ./opentelemetry-collector/docker-compose.yaml
+  - ./app/docker-compose.yaml
+  - ./nginx/docker-compose.yaml
