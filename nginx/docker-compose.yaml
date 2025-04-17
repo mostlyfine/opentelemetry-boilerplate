@@ -1,9 +1,0 @@
-services:
-  nginx:
-    container_name: nginx
-    image: nginx:stable-alpine-otel
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./index.html:/usr/share/nginx/html/index.html
-    ports:
-      - "80:80"

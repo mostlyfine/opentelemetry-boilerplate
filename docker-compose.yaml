@@ -6,4 +6,3 @@ include:
   - ./pyroscope/docker-compose.yaml
   - ./opentelemetry-collector/docker-compose.yaml
   - ./app/docker-compose.yaml
-  - ./nginx/docker-compose.yaml
