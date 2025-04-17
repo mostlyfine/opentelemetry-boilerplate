@@ -5,4 +5,5 @@ include:
   - ./tempo/docker-compose.yaml
   - ./pyroscope/docker-compose.yaml
   - ./opentelemetry-collector/docker-compose.yaml
-  - ./app/docker-compose.yaml
+  # - ./app/docker-compose.yaml
+  - ./jeager-example/docker-compose.yaml
