@@ -20,7 +20,7 @@
           }
           const jsonData = await response.json();
           container.innerHTML = `
-            <h2>${jsonData.result}</h2>
+            <h2>${jsonData.dice}</h2>
           `
         } catch(err) {
           container.innerHTML = err;

@@ -5,3 +5,4 @@ opentelemetry-distro
 opentelemetry-instrumentation
 opentelemetry-exporter-otlp
 pyroscope-io
+pyroscope-otel
