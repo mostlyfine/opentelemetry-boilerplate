@@ -1,2 +1,4 @@
+.claude/
+.gemini/
 *.env
 *.log
