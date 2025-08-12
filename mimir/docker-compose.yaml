@@ -10,5 +10,6 @@ services:
     volumes:
       - "./mimir.yaml:/etc/mimir.yaml"
     ports:
-      - 9009  # http
+      - 8080  # http
+      - 9095  # grpc
 

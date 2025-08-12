@@ -32,7 +32,7 @@ receivers:
         - job_name: 'mimir'
           static_configs:
             - targets:
-              - 'mimir:9009'
+              - 'mimir:8080'
   httpcheck:
     targets:
       - endpoint: "http://nginx:80"
@@ -66,12 +66,12 @@ connectors:
 
 exporters:
   otlphttp/mimir:
-    endpoint: http://mimir:9009/otlp
+    endpoint: http://mimir:8080/otlp
     tls:
       insecure: true
 
   prometheusremotewrite:
-    endpoint: http://mimir:9009/api/v1/push
+    endpoint: http://mimir:8080/api/v1/push
     tls:
       insecure: true
     target_info:
@@ -93,7 +93,12 @@ exporters:
 service:
   telemetry:
     metrics:
-      address: localhost:8888
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: '0.0.0.0'
+                port: 8888
   pipelines:
     traces:
       receivers:

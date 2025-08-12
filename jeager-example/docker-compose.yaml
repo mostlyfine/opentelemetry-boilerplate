@@ -13,9 +13,10 @@ services:
     container_name: hotrod
     command: [ "all" ]
     environment:
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://opentelemetry-collector:4318
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://opentelemetry-collector:4318"
       OTEL_RESOURCE_ATTRIBUTES: "service.name=sample-app,service.namespace=sample"
-      OTEL_LOGS_EXPORTER: otlp
+      LOG_LEVEL: debug
     ports:
       - 8080
 

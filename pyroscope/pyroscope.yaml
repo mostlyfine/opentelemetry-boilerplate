@@ -1,6 +1,6 @@
 server:
   http_listen_port: 4040
-  grpc_listen_port: 4041
+  grpc_listen_port: 9095
 
 tracing:
   enabled: true

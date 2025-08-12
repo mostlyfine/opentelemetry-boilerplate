@@ -2,7 +2,7 @@ stream_over_http_enabled: true
 
 server:
   http_listen_port: 3200
-  grpc_listen_port: 9096
+  grpc_listen_port: 9095
   log_level: info
 
 distributor:
@@ -31,7 +31,7 @@ metrics_generator:
   storage:
     path: /var/tempo/data/generator/wal
     remote_write:
-      - url: http://mimir:9009/api/v1/push
+      - url: http://mimir:8080/api/v1/push
 
 overrides:
   metrics_generator_processors: [service-graphs, local-blocks, span-metrics]

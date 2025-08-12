@@ -8,6 +8,6 @@ services:
       - ./tempo.yaml:/etc/tempo.yaml
     ports:
       - 3200 # http
-      - 9096 # grpc
+      - 9095 # grpc
       - 4417 # otlp grpc
       - 4418 # otlp http
