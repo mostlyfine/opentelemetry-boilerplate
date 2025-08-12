@@ -70,6 +70,28 @@ Once the containers are running, you can access the following endpoints:
   - **Jaeger Example:** [http://localhost](http://localhost) (when `OTEL_APP=jeager-example`, includes Locust load testing capabilities)
 
 
+### Load Testing with Jaeger Example
+
+When using the Jaeger example (`OTEL_APP=jeager-example`), you can perform load testing using Locust:
+
+1. **Start the Jaeger example:**
+   ```bash
+   OTEL_APP=jeager-example docker-compose up -d
+   ```
+
+2. **Access Locust web UI:**
+   Open [http://localhost:8089](http://localhost:8089) in your browser
+
+3. **Configure load test:**
+   - **Number of users:** Set the total number of concurrent users
+   - **Spawn rate:** Set how many users to start per second
+   - **Host:** Use `http://nginx` (the internal service name)
+
+4. **Start load test:**
+   Click "Start swarming" to begin the load test and monitor the results in real-time
+
+The load test will generate traffic to various endpoints with different customer IDs, creating traces and metrics that you can observe in Grafana.
+
 ### Stopping the Stack
 
 To stop the stack, run the following command in the repository's root directory:
