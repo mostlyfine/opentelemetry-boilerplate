@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Favorites - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Favorites</h2>
+    <p>Tweets you've favorited</p>
+</div>
+
+<div class="tweets-container">
+    {% include '_tweet.html' %}
+</div>
+{% endblock %}

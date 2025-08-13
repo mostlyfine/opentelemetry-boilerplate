@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Timeline - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Timeline</h2>
+    <a href="{{ url_for('post') }}" class="btn btn-primary">New Tweet</a>
+</div>
+
+<div class="tweets-container">
+    {% include '_tweet.html' %}
+</div>
+{% endblock %}

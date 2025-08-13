@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Twitter Clone{% endblock %}</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><a href="{{ url_for('index') }}">Twitter Clone</a></h1>
+            {% if current_user %}
+            <div class="search-container">
+                <form class="search-form" method="GET" action="{{ url_for('search') }}">
+                    <input type="text" name="q" placeholder="Search tweets..." class="search-input" value="{{ request.args.get('q', '') }}">
+                    <button type="submit" class="search-btn">🔍</button>
+                </form>
+            </div>
+            {% endif %}
+            <div class="header-actions">
+                {% if current_user %}
+                    <span>Hello, {{ current_user.name }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="{{ url_for('index') }}" class="nav-link">Trends</a></li>
+                        {% if current_user %}
+                            <li><a href="{{ url_for('timeline') }}" class="nav-link">Timeline</a></li>
+                            <li><a href="{{ url_for('post') }}" class="nav-link">Post</a></li>
+                            <li><a href="{{ url_for('favorites') }}" class="nav-link">Favorites</a></li>
+                            <li><a href="{{ url_for('followers') }}" class="nav-link">Followers</a></li>
+                            <li><a href="{{ url_for('following') }}" class="nav-link">Following</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="content">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                                <div class="alert alert-warning">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

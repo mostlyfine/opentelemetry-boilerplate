@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Followers - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Followers</h2>
+    <p>Users who follow you</p>
+</div>
+
+<div class="users-container">
+    {% include '_user.html' %}
+</div>
+{% endblock %}

@@ -20,6 +20,7 @@ It uses `docker-compose` with modular include files to start the main components
 * Multiple example applications for testing OpenTelemetry integration:
   - Python app with log output and Pyroscope profiling
   - Jaeger example with Locust load testing capabilities
+  - Twitter clone app with social media features and load testing
 * Environment variable support for switching between different applications (OTEL_APP).
 
 ## Getting Started
@@ -50,6 +51,11 @@ Ensure you have the following software installed on your local machine:
     OTEL_APP=jeager-example docker-compose up -d
     ```
 
+    **To use the Twitter clone app:**
+    ```bash
+    OTEL_APP=twitter docker-compose up -d
+    ```
+
 3.  **Check container status  (Optional):**
     ```bash
     docker-compose ps
@@ -68,6 +74,8 @@ Once the containers are running, you can access the following endpoints:
 * **Sample Applications:**
   - **Python App (default):** [http://localhost](http://localhost) (Flask application with OpenTelemetry, includes log output and Pyroscope profiling)
   - **Jaeger Example:** [http://localhost](http://localhost) (when `OTEL_APP=jeager-example`, includes Locust load testing capabilities)
+  - **Twitter Clone App:** [http://localhost](http://localhost) (when `OTEL_APP=twitter`, social media app with OpenTelemetry tracing and load testing)
+    - **Login credentials:** user[0001-0100]@example.com / password123
 
 
 ### Load Testing with Jaeger Example
@@ -91,6 +99,28 @@ When using the Jaeger example (`OTEL_APP=jeager-example`), you can perform load 
    Click "Start swarming" to begin the load test and monitor the results in real-time
 
 The load test will generate traffic to various endpoints with different customer IDs, creating traces and metrics that you can observe in Grafana.
+
+### Load Testing with Twitter Clone App
+
+When using the Twitter clone app (`OTEL_APP=twitter`), you can perform load testing using Locust:
+
+1. **Start the Twitter clone app:**
+   ```bash
+   OTEL_APP=twitter docker-compose up -d
+   ```
+
+2. **Access Locust web UI:**
+   Open [http://localhost:8089](http://localhost:8089) in your browser
+
+3. **Configure load test:**
+   - **Number of users:** Set the total number of concurrent users
+   - **Spawn rate:** Set how many users to start per second
+   - **Host:** Use `http://nginx` (the internal service name)
+
+4. **Start load test:**
+   Click "Start swarming" to begin the load test and monitor the results in real-time
+
+The load test will simulate various Twitter-like activities including user interactions, posting tweets, and browsing timelines, creating comprehensive traces and metrics for observability testing.
 
 ### Stopping the Stack
 

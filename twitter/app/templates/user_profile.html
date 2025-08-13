@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.name }} - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="user-profile-info">
+        <h2>{{ user.name }}</h2>
+        <p class="user-email">{{ user.mailaddress }}</p>
+        <p class="user-joined">Joined: {{ user.created_at.strftime('%B %d, %Y') }}</p>
+    </div>
+    <div class="user-actions">
+        {% if current_user.id != user.id %}
+            {% if current_user.is_following(user) %}
+                <button class="btn btn-secondary" onclick="unfollow({{ user.id }})">Unfollow</button>
+            {% else %}
+                <button class="btn btn-primary" onclick="follow({{ user.id }})">Follow</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="user-stats">
+    <div class="stat-item">
+        <span class="stat-number">{{ tweets|length }}</span>
+        <span class="stat-label">Tweets</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-number">{{ user.following.count() }}</span>
+        <span class="stat-label">Following</span>
+    </div>
+    <div class="stat-item">
+        <span class="stat-number">{{ user.followers.count() }}</span>
+        <span class="stat-label">Followers</span>
+    </div>
+</div>
+
+<div class="tweets-container">
+    <h3>{{ user.name }}'s Tweets</h3>
+    {% if tweets %}
+        {% include '_tweet.html' %}
+    {% else %}
+        <div class="empty-state">
+            <p>No tweets yet.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

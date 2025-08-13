@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Post - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <h2>New Tweet</h2>
+    
+    <form method="POST" class="post-form">
+        <div class="form-group">
+            <textarea name="msg" id="msg" placeholder="What's happening?" maxlength="128" required></textarea>
+            <div class="char-count">
+                <span id="char-counter">0</span>/128
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="post-btn">Tweet</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('msg');
+    const charCounter = document.getElementById('char-counter');
+    const postBtn = document.getElementById('post-btn');
+    
+    textarea.addEventListener('input', function() {
+        const length = this.value.length;
+        charCounter.textContent = length;
+        
+        if (length > 128) {
+            charCounter.style.color = 'red';
+            postBtn.disabled = true;
+        } else if (length === 0) {
+            postBtn.disabled = true;
+        } else {
+            charCounter.style.color = length > 100 ? 'orange' : '#666';
+            postBtn.disabled = false;
+        }
+    });
+});
+</script>
+{% endblock %}

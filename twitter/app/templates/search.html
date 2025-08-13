@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Twitter Clone{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    {% if query %}
+        <h2>Search Results: "{{ query }}"</h2>
+        <p>{{ tweets|length }} tweets found</p>
+    {% else %}
+        <h2>Tweet Search</h2>
+        <p>Please enter search keywords</p>
+    {% endif %}
+</div>
+
+<div class="tweets-container">
+    {% if query %}
+        {% include '_tweet.html' %}
+    {% else %}
+        <div class="empty-state">
+            <p>You can search for tweets using the search box above.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
