@@ -5,4 +5,4 @@ include:
   - ./tempo/docker-compose.yaml
   - ./pyroscope/docker-compose.yaml
   - ./opentelemetry-collector/docker-compose.yaml
-  - ./${OTEL_APP:-app}/docker-compose.yaml
+  - ./${OTEL_APP:-twitter}/docker-compose.yaml

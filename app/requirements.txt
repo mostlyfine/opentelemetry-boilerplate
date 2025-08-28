@@ -1,8 +1,0 @@
-Flask
-requests
-opentelemetry-api
-opentelemetry-distro
-opentelemetry-instrumentation
-opentelemetry-exporter-otlp
-pyroscope-io
-pyroscope-otel
