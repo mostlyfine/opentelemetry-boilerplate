@@ -1,7 +1,7 @@
 services:
   mimir:
     container_name: mimir
-    image: grafana/mimir:latest
+    image: grafana/mimir:3.0.6
     command:
       - "-config.expand-env=true"
       - "-config.file=/etc/mimir.yaml"
