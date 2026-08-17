@@ -7,6 +7,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/static:/var/www/static
+      - app-logs:/var/log/nginx # app-logs volume is defined in the root docker-compose.yaml.
     depends_on:
       - app
     restart: unless-stopped
@@ -20,6 +21,7 @@ services:
       - 5000
     volumes:
       - ./app/twitter_clone.db:/app/instance/twitter_clone.db
+      - app-logs:/app/logs # app-logs volume is defined in the root docker-compose.yaml.
     environment:
       SECRET_KEY: your-secret-key-change-in-production
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf

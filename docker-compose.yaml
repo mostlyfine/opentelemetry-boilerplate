@@ -6,3 +6,8 @@ include:
   - ./pyroscope/docker-compose.yaml
   - ./opentelemetry-collector/docker-compose.yaml
   - ./${OTEL_APP:-twitter}/docker-compose.yaml
+
+# Define app-logs here so opentelemetry-collector's log mounts stay valid
+# even when no app (e.g. twitter) is included.
+volumes:
+  app-logs:

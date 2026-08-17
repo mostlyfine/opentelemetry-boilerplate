@@ -6,6 +6,9 @@ services:
       - "--config=/etc/opentelemetry-collector.yaml"
     volumes:
       - ./opentelemetry-collector.yaml:/etc/opentelemetry-collector.yaml
+      # app-logs volume is defined in the root docker-compose.yaml
+      - app-logs:/var/log/nginx
+      - app-logs:/app/logs
     ports:
       - "4317:4317"   # grpc
       - "4318:4318"   # http
