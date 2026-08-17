@@ -33,6 +33,13 @@ receivers:
           static_configs:
             - targets:
               - 'mimir:8080'
+          relabel_configs:
+            - target_label: 'cluster'
+              replacement: 'mimir'
+            - target_label: 'namespace'
+              replacement: 'mimir'
+            - target_label: 'job'
+              replacement: 'mimir/mimir'
   httpcheck:
     targets:
       - endpoint: "http://nginx:80"

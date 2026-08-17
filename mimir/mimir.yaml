@@ -35,9 +35,9 @@ ingester:
     replication_factor: 1
 
 ruler_storage:
-  backend: filesystem
-  filesystem:
-    dir: /data/mimir/rules
+  backend: local
+  local:
+    directory: /data/mimir/rules
 
 store_gateway:
   sharding_ring:

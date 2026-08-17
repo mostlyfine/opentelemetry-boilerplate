@@ -9,6 +9,7 @@ services:
       - "-ingester.native-histograms-ingestion-enabled=true"
     volumes:
       - "./mimir.yaml:/etc/mimir.yaml"
+      - "./rules:/data/mimir/rules"
     ports:
       - 8080  # http
       - 9095  # grpc
